@@ -328,28 +328,6 @@ theorem Theorem_3E_3 {A B : Type} (R : Set (A × B)) : inv (inv R) = R := by rfl
 theorem inv_def {A B : Type} (R : Set (A × B)) (a : A) (b : B) :
   (b, a) ∈ inv R ↔ (a, b) ∈ R := by rfl
 
---Exercise P.53 21
-example {A B C D : Type}
-  (R : Set (A × B)) (S : Set (B × C)) (T : Set (C × D)) :
-    comp T (comp S R) = comp (comp T S) R := by
-      apply Set.ext
-      intro (a, d)
-      apply Iff.intro
-      · intro h1
-        cases' h1 with c hc
-        cases' hc with h2 h3
-        cases' h2 with b hb
-        exists b
-        apply And.intro hb.left
-        exists c
-        apply And.intro hb.right h3
-      · intro h2
-        cases' h2 with b hb
-        cases' hb with h3 h4
-        cases' h4 with c hc
-        exists c
-        apply And.intro (Exists.intro b (And.intro h3 hc.left)) hc.right
-
 --P.47 Theorem_3I
 theorem Theorem_3I {A B C : Type}
   (R : Set (A × B)) (S : Set (B × C)) :
@@ -374,3 +352,29 @@ theorem Theorem_3I {A B C : Type}
         rcases h1 with ⟨b, hS, hR⟩
         rw [inv_def] at hS hR
         use b
+
+--Exercise P.53 21
+example {A B C D : Type}
+  (R : Set (A × B)) (S : Set (B × C)) (T : Set (C × D)) :
+    comp T (comp S R) = comp (comp T S) R := by
+      apply Set.ext
+      intro (x, y)
+      apply Iff.intro
+      · intro h1
+        cases' h1 with b h1
+        cases' h1 with h1 h2
+        cases' h1 with a h1
+        cases' h1 with h1 h3
+        exists a
+        apply And.intro
+        · exact h1
+        · exists b
+      · intro h1
+        cases' h1 with a h1
+        cases' h1 with h1 h2
+        cases' h2 with b h2
+        cases' h2 with h2 h3
+        exists b
+        apply And.intro
+        · exists a
+        · exact h3
